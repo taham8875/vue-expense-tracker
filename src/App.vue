@@ -1,9 +1,46 @@
 <script setup lang="ts">
 import Header from './components/Header.vue';
+import BalanceData from './components/BalanceData.vue';
+import { ref, onMounted, computed } from 'vue';
+import type { TransactionType } from '../index.d';
+
+const transactions = ref<TransactionType[]>([]);
+
+onMounted(async () => {
+  const response = await fetch('api/transactions');
+  transactions.value = await response.json();
+  console.log(transactions.value);
+
+  transactions.value = transactions.value.map((transaction) => {
+    return {
+      ...transaction,
+      amount: Number(transaction.amount),
+    };
+  });
+});
+
+const balance = computed(() => {
+  return transactions.value.reduce((acc, transaction) => {
+    return acc + transaction.amount;
+  }, 0);
+});
+
+const income = computed(() => {
+  return transactions.value.reduce((acc, transaction) => {
+    return transaction.amount > 0 ? acc + transaction.amount : acc;
+  }, 0);
+});
+
+const expense = computed(() => {
+  return transactions.value.reduce((acc, transaction) => {
+    return transaction.amount < 0 ? acc + transaction.amount : acc;
+  }, 0);
+});
 </script>
 
 <template>
   <Header />
+  <BalanceData :balance="balance" :expense="expense" :income="income" />
 </template>
 
 <style>
