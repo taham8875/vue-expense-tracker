@@ -6,11 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
+    "server": "json-server --watch db.json --port 5000",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "json-server": "^0.17.4",
     "vue": "^3.3.11"
   },
   "devDependencies": {

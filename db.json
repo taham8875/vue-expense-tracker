@@ -1,0 +1,29 @@
+{
+  "transactions": [
+    {
+      "id": "1",
+      "name": "Salary",
+      "amount": "1000"
+    },
+    {
+      "id": "2",
+      "name": "Rent",
+      "amount": "-500"
+    },
+    {
+      "id": "3",
+      "name": "Groceries",
+      "amount": "-200"
+    },
+    {
+      "id": "4",
+      "name": "Dinner",
+      "amount": "-100"
+    },
+    {
+      "id": "4",
+      "name": "Freelance",
+      "amount": "300"
+    }
+  ]
+}
