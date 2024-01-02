@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Header from './components/Header.vue';
 import BalanceData from './components/BalanceData.vue';
+import TransactionsHistory from './components/TransactionsHistory.vue';
 import { ref, onMounted, computed } from 'vue';
 import type { TransactionType } from '../index.d';
 
@@ -36,11 +37,23 @@ const expense = computed(() => {
     return transaction.amount < 0 ? acc + transaction.amount : acc;
   }, 0);
 });
+
+const deleteTransaction = async (id: string) => {
+  console.log(id);
+  await fetch(`api/transactions/${id}`, {
+    method: 'DELETE',
+  });
+
+  transactions.value = transactions.value.filter(
+    (transaction) => transaction.id !== id
+  );
+};
 </script>
 
 <template>
   <Header />
   <BalanceData :balance="balance" :expense="expense" :income="income" />
+  <TransactionsHistory :transactions="transactions" @delete-transaction="deleteTransaction" />
 </template>
 
 <style>
