@@ -2,6 +2,8 @@
 import Header from './components/Header.vue';
 import BalanceData from './components/BalanceData.vue';
 import TransactionsHistory from './components/TransactionsHistory.vue';
+import AddNewTransactionForm from './components/AddNewTransactionForm.vue';
+
 import { ref, onMounted, computed } from 'vue';
 import type { TransactionType } from '../index.d';
 
@@ -38,6 +40,19 @@ const expense = computed(() => {
   }, 0);
 });
 
+const createNewTransaction = async (transaction: TransactionType) => {
+  const response = await fetch('api/transactions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(transaction),
+  });
+
+  const newTransaction = await response.json();
+  transactions.value = [...transactions.value, newTransaction];
+};
+
 const deleteTransaction = async (id: string) => {
   console.log(id);
   await fetch(`api/transactions/${id}`, {
@@ -54,6 +69,7 @@ const deleteTransaction = async (id: string) => {
   <Header />
   <BalanceData :balance="balance" :expense="expense" :income="income" />
   <TransactionsHistory :transactions="transactions" @delete-transaction="deleteTransaction" />
+  <AddNewTransactionForm @create-new-transaction="createNewTransaction" />
 </template>
 
 <style>
