@@ -8,7 +8,7 @@ defineProps({
 
 <template>
   <div class="py-6">
-    <h3>Total Balance</h3>
+    <h3 class="text-xl font-semibold">Total Balance</h3>
     <h2 class="text-3xl font-semibold">${{ balance }}</h2>
   </div>
   <div class="flex align-center justify-around px-2 py-6 border border-gray-200 rounded">
